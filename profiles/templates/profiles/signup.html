@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    signup |
+{% endblock %}
+
+
+
+{% block content %}
+           
+    <form class="mt-5" method="post" action=".">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+
+            <button>Sign up</button>
+    </form>
+{% endblock %}

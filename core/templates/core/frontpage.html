@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% load menu %}
+
+<a href="{% url 'frontpage' %}">HOME</a>
+<a href="{% url 'add_property-page' %}">ADD POST</a>
+
+{% block title %}
+Welcome
+{% endblock %}
+
+{% block header %}
+  {% include 'core/header.html' %}
+{% endblock %}
+
+{% block search %}
+    {% include 'core/search.html' %}
+{% endblock %}
+
+
+
+
+
+{% block content %}
+  {% include 'core/property_list.html' %}
+{% endblock %}
+
+

@@ -1,0 +1,90 @@
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ property.title }} |
+{% endblock %}
+
+
+   <div class="mt-5">
+        <p class="">{{ property.title }}</p>
+        {% if property.thumbnail %}
+        <img src="{{ property.thumbnail.url }}" alt="img">
+        {% endif %}
+        <p class="">{{ property.description }}</p>
+        <p>${{ property.price}}.00 -
+            <a href="">{% firstof property.user.get_full_name property.user.username %}</a>
+        <p> {{ Property.description }}</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'edit_property' property.pk %}">edit</a>
+        <a href="{% url 'delete_property'  property.pk %}">delete</a>
+        {% endif %}
+   </div>
+
+
+
+
+{% block content %}
+
+     <!-- About Start -->
+     <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="about-img position-relative overflow-hidden p-5 pe-0">
+                        {% if property.thumbnail %}
+                        
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                {% for p in images %}
+                              <div class="carousel-item active">
+                                
+                                <img class="d-block w-100" src="{{ p.images.url }}" alt="First slide">
+                              </div>
+                               {% endfor %}
+                                {% else %}
+                                <img class="img-fluid w-100" src="{% static 'core/img/about.jpg' %}">
+                                {% endif %}
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                          </div>
+                       
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <h1 class="mb-4">{{ property.title }}</h1>
+                    <p><i class="fa fa-ruler-combined text-primary me-2"></i>{{ property.building_size_in_SQFT }} Sqft</p>
+                    <p><i class="fa fa-ruler-combined text-primary me-2"></i>{{ property.bathroom }} bath</p>
+                    <p><i class="fa fa-ruler-combined text-primary me-2"></i>{{ property.bedroom }} bed</p>
+                    <p class="mb-4">{{ property.description }}</p>
+
+                   
+                    
+                    {% if user.is_authenticated %}
+                        {% if property.user == request.user %}
+                        <a class="btn btn-primary py-3 px-5 mt-3" href="{% url 'edit_property' property.pk %}">Edit post</a>
+                        <a class="btn btn-primary py-3 px-5 mt-3" href="{% url 'delete_property'  property.pk %}">Delete post</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Contact agent</a>
+                        <p class="mt-3" ><a href="{% url 'agent_profile' property.user.pk %}">{% firstof property.user.get_full_name property.user.username %}</a></p>
+                    {% endif %}
+                </div> 
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+    {% endblock %}
